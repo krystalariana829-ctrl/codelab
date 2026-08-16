@@ -1,0 +1,49 @@
+const yearNode = document.getElementById('year');
+if (yearNode) {
+  yearNode.textContent = new Date().getFullYear();
+}
+
+const navToggle = document.querySelector('.nav-toggle');
+const nav = document.querySelector('.nav');
+
+if (navToggle && nav) {
+  navToggle.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+}
+
+const filters = document.querySelectorAll('.filter');
+const cards = document.querySelectorAll('.course-card');
+
+filters.forEach((filter) => {
+  filter.addEventListener('click', () => {
+    filters.forEach((btn) => btn.classList.remove('active'));
+    filter.classList.add('active');
+
+    const selected = filter.dataset.filter;
+
+    cards.forEach((card) => {
+      const show = selected === 'all' || card.dataset.category === selected;
+      card.style.display = show ? 'block' : 'none';
+    });
+  });
+});
+
+const revealItems = document.querySelectorAll('.reveal');
+
+if ('IntersectionObserver' in window) {
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  revealItems.forEach((item) => revealObserver.observe(item));
+} else {
+  revealItems.forEach((item) => item.classList.add('visible'));
+}
+
