@@ -1,4 +1,6 @@
-const yearNode = document.getElementById('year');
+<script>
+
+  const yearNode = document.getElementById('year');
 if (yearNode) {
   yearNode.textContent = new Date().getFullYear();
 }
@@ -46,4 +48,5 @@ if ('IntersectionObserver' in window) {
 } else {
   revealItems.forEach((item) => item.classList.add('visible'));
 }
+</script>
 
